@@ -1,0 +1,275 @@
+{
+    "key": "group_63e43be3e5b87",
+    "title": "School List Page",
+    "fields": [
+        {
+            "key": "field_63e46c579ec01",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_63e46c339ec00",
+            "label": "Find a School Content",
+            "name": "find_a_school_content",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_63e43bec2e0cf",
+            "label": "School Types To Display",
+            "name": "school_types_to_display",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "school_type",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "object",
+            "multiple": 0
+        },
+        {
+            "key": "field_63e46c659ec02",
+            "label": "Style",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_63e46cf89ec06",
+            "label": "Find a School Text Color",
+            "name": "school_search_color",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "has-black-color": "Black",
+                "has-white-color": "White",
+                "has-primary-dark-color": "Primary Dark",
+                "has-primary-light-color": "Primary Light",
+                "has-secondary-dark-color": "Secondary Dark",
+                "has-secondary-light-color": "Secondary Light"
+            },
+            "default_value": "has-white-color",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_63e46cc29ec04",
+            "label": "Find a School Background Color",
+            "name": "school_search_background_color",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "has-transparent-background-color": "None",
+                "has-black-background-color": "Black",
+                "has-white-background-color": "White",
+                "has-primary-dark-background-color": "Primary Dark",
+                "has-primary-light-background-color": "Primary Light",
+                "has-secondary-dark-background-color": "Secondary Dark",
+                "has-secondary-light-background-color": "Secondary Light"
+            },
+            "default_value": "has-white-background-color",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_63e46d249ec07",
+            "label": "School List Text Color",
+            "name": "school_list_color",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "has-black-color": "Black",
+                "has-white-color": "White",
+                "has-primary-dark-color": "Primary Dark",
+                "has-primary-light-color": "Primary Light",
+                "has-secondary-dark-color": "Secondary Dark",
+                "has-secondary-light-color": "Secondary Light"
+            },
+            "default_value": "has-primary-dark-color",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_63e46c7c9ec03",
+            "label": "School List Background Color",
+            "name": "school_list_background_color",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "has-transparent-background-color": "None",
+                "has-black-background-color": "Black",
+                "has-white-background-color": "White",
+                "has-primary-dark-background-color": "Primary Dark",
+                "has-primary-light-background-color": "Primary Light",
+                "has-secondary-dark-background-color": "Secondary Dark",
+                "has-secondary-light-background-color": "Secondary Light"
+            },
+            "default_value": "has-white-background-color",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_63e46d539ec08",
+            "label": "School Card Text Color",
+            "name": "school_card_color",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "has-black-color": "Black",
+                "has-white-color": "White",
+                "has-primary-dark-color": "Primary Dark",
+                "has-primary-light-color": "Primary Light",
+                "has-secondary-dark-color": "Secondary Dark",
+                "has-secondary-light-color": "Secondary Light"
+            },
+            "default_value": "has-white-color",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_63e46d6a9ec09",
+            "label": "School Card Background Color",
+            "name": "school_card_background_color",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "has-transparent-background-color": "None",
+                "has-black-background-color": "Black",
+                "has-white-background-color": "White",
+                "has-primary-dark-background-color": "Primary Dark",
+                "has-primary-light-background-color": "Primary Light",
+                "has-secondary-dark-background-color": "Secondary Dark",
+                "has-secondary-light-background-color": "Secondary Light"
+            },
+            "default_value": "has-primary-dark-background-color",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_template",
+                "operator": "==",
+                "value": "page-schools.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1675914636
+}

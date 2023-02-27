@@ -1,0 +1,407 @@
+/*!
+Theme Name: CSO Maitland-Newcastle HQ - CSOMN Theme
+Theme URI: https://beech.agency/
+Author: Beech Agency
+Author URI: https://beech.agency/
+
+Template: cso-master
+
+Description: A theme for the CSO Maitland-Newcastle HQ 
+Version: 0.3
+Tested up to: 6.4
+Requires PHP: 8.1
+License: GNU General Public License v2 or later
+License URI: LICENSE
+Text Domain: csomasterchild-csohq
+Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned.
+
+csomaster is based on Underscores https://underscores.me/, (C) 2012-2020 Automattic, Inc.
+Underscores is distributed under the terms of the GNU GPL v2 or later.
+
+*/
+
+/* --------------------------------------------------------------*/
+
+:root {
+	--primary-dark : #2b3990;
+	--primary-light : #8DC63F;
+	--secondary-dark : #00AEEF;
+	--secondary-light : #D8F3FD;
+	--warning : #C92D2D;
+	--success : #2DC98D;
+
+	--gradient-primary-end : #d7d823;
+	--gradient-secondary-end : #2b3990;
+
+	--ff-helvetica : "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+
+	--ff-sans : var(--ff-helvetica);
+	--ff-serif : var(--ff-helvetica);
+}
+
+h1, h2 { font-weight: var(--fw-bold); }
+
+.block.has-school-style.has-secondary-dark-background-color::after,
+.block.has-school-style.has-primary-dark-background-color::after,
+.block.has-school-style.has-black-background-color::after {
+	content:  url('./images/school-style-white.svg');
+}
+
+.block.has-school-style.has-secondary-light-background-color::after,
+.block.has-school-style.has-primary-light-background-color::after,
+.block.has-school-style.has-white-background-color::after,
+.block.has-school-style.has-transparent-background-color::after {
+	content:  url('./images/school-style-black.svg');
+}
+
+.block.text-block__image_text.image-inset.block.has-primary-dark-background-color {
+	position: relative;
+}
+.block.text-block__image_text.image-inset.block.has-primary-dark-background-color::after {
+	position: absolute;
+	z-index : 0;
+	bottom: 0;
+	right: 0;
+	content: '';
+	background-image: url('./images/corner-gradient-bottom-light-blue.svg');
+	background-position: center right;
+	background-size: contain;
+	width: 36%;
+	height: 50%;
+	background-repeat: no-repeat;
+}
+.block.text-block__image_text.image-inset.block.has-primary-dark-background-color > div {
+	position: relative;
+	z-index: 1;
+}
+
+.has-primary-light-background-color {
+	background: transparent linear-gradient(220deg, var(--gradient-primary-end) 0%, var(--primary-light) 84%, var(--primary-light) 100%) 0% 0% no-repeat padding-box;
+}
+.has-secondary-light-background-color {
+	background: transparent linear-gradient(220deg, var(--secondary-dark) 0%, var(--gradient-secondary-end) 84%, var(--gradient-secondary-end) 100%) 0% 0% no-repeat padding-box;
+}
+
+header.has-black-background-color .btn {
+	--base-background-color: transparent;
+}
+header.has-black-background-color .btn:hover {
+	color: var(--black);
+}
+
+nav img.logo, aside img.logo {
+	transform: translate(0, -1rem);
+	max-height: 4.56rem;
+}
+.site-search-outer img.logo {
+	width: auto;
+	max-height: 4.56rem;
+}
+nav.header-alternative img.logo {
+	margin-top: -2rem;
+    transform: translate(0, 1rem);
+}
+
+ul.footer-school-list, ul.school-list {
+	margin: 1rem 0 2rem; 
+	padding: 0;
+	list-style: none;
+	font-size: var(--fs-s1);
+}
+
+ul.footer-school-list li {
+	margin-bottom: 0.5rem;
+}
+
+ul.footer-school-list.two-cols {
+	columns: 2;
+}
+
+footer > div.xy-grid {
+	padding-top: 4rem;
+	padding-bottom: 2rem;
+}
+
+footer .term-dates {font-size: var(--fs-s2);}
+footer .term-dates b { font-weight: bold; text-transform: uppercase; }
+footer .term-dates .pipe { display: inline-block; padding-inline: 0.5rem; }
+footer .term-dates .pipe:last-of-type { display: none; }
+
+footer .footer-logo img {
+	max-width: 18rem;
+	margin-top: 0;
+}
+
+footer div nav.xy-col { display: flex;align-items: center; font-size: var(--fs-s1); }
+footer .nav-footer { margin-right: 1.5rem; }
+.nav-footer-auxiliary ul { gap: 1.5rem; }
+footer .nav-footer > ul { display: flex; gap: 1.5rem; }
+footer .nav-footer > ul > li {
+	font-size: var(--fs-s1);
+}
+
+footer > .xy-grid:last-of-type .xy-col:last-of-type > .xy-flex {
+	border-top: 1px solid rgba(255,255,255,0.4);
+} 
+footer .social {
+	justify-content: flex-end;
+}
+footer .social a img {
+	min-height: 0;
+	height: 1.5rem;
+}
+
+footer .phone { margin-bottom: 0; }
+
+.footer-acknowledgement { margin-top: 1rem; }
+.footer-acknowledgement p.small {
+	font-size: var(--fs-s2);
+	max-width: 42rem;
+}
+
+/* School pages */
+.school-details img {
+	margin-bottom: 2rem;
+}
+
+.text-block__text .school-details span.location {/* display: block; */}
+
+.school-btn-row {
+	--base-background-color: transparent;
+	margin: 2rem 0;
+	gap: 1rem;
+	display: flex;
+}
+.school-btn-row .btn:hover {
+	color: var(--white);
+}
+.school-btn-row .btn:hover .icon {
+	filter: brightness(100);
+}
+.school-btn-row .btn, .details.download a {
+	display: flex; align-items: center; gap: 0.5rem;
+}
+img.icon {
+	display: inline-block;
+	width: auto;
+	transition: all 150ms linear;
+}
+.details.download a { text-decoration: underline; transition: 150ms ease all;}
+.details.download a:hover { opacity: 0.7;}
+
+.school-type-list ul {
+	padding-left: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.school-details-right .icon { height: var(--fs-base); }
+.school-details-right h4 {
+	margin-top: 2rem;
+}
+.school-details-right p { margin-bottom: 0.5rem;}
+
+.school-details-right .details.email, .school-details-right .details.phone { display: flex; align-items: center; gap: 0.5rem; }
+.school-details-right .details svg { width: var(--fs-s2); height: auto; }
+
+.school-details iframe {
+	aspect-ratio: 6 / 7;
+	width: 100%;
+	object-fit: cover;
+	height: auto;
+}
+
+header .school-details { font-size: var(--fs-h5); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;}
+header .school-details span {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin-inline: 0.5rem;
+}
+
+.btn svg {
+	margin-left: 0.5rem;
+}
+
+.school-card img {
+	aspect-ratio: 2 / 1;
+	object-fit: cover;
+	object-position: center;
+	height: auto;
+	width: 100%;
+}
+
+.school-card .card-date {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+}
+.school-card .card-date span { display: flex; align-items: center; gap: 0.5rem;}
+
+
+.school-type-filters .btn.active {
+	--base-background-color: var(--white);
+	--text-color: var(--primary-dark);
+}
+.school-type-filters .btn.active:hover {
+	--base-background-color: var(--primary-dark);
+	--text-color: var(--primary-light);
+}
+
+.school-section-nav nav {
+	display: flex;
+	gap: 3rem;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+	border-bottom: solid 1px #2b39903e;
+}
+
+.school-section-nav nav ul {
+	margin: 0; padding: 0;
+	display: flex;
+}
+.school-section-nav nav ul li {
+	padding-inline: 2rem;
+}
+.school-section-nav nav ul li:not(:last-child) {
+	border-right: 1px solid var(--primary-dark);
+}
+.block.cards-block__image-cards.school-type-list, .block.schools-block__school_list {
+	padding-block: 4rem;
+}
+.block.schools-block__school_finder {
+	padding-block: 6rem;
+}
+.find-a-school {
+	margin-bottom: 3rem;
+}
+
+.find-a-school.no-margin {
+    margin-bottom: 0;
+}
+.find-a-school > label {
+	border-bottom: solid 1px currentColor;
+}
+.find-a-school > label svg.search-icon {
+	width: var(--fs-h2);
+	height: auto;
+}
+.find-a-school input.search-field {
+	padding-left: 1rem;
+	outline: transparent;
+	font-size: var(--fs-h3);
+	color: currentcolor;
+	/*border-bottom: solid 1px currentColor;*/
+	background-image: none; 
+	background-size: auto 60%;
+	width: 100%;
+}
+.find-a-school input.search-field::placeholder {
+	color: currentColor;
+	opacity: 0.5;
+}
+.search-submit {
+    width: 3rem;
+    padding: 0.25rem;
+    background-color: transparent;
+    border: none;
+	/*border-bottom: solid 1px currentColor;*/
+    cursor: pointer;
+    color: currentColor;
+}
+
+.search-form.find-a-school label {
+	display: flex;
+}
+
+
+
+.find-a-school input.search-field:active,
+.find-a-school input.search-field:focus,
+.find-a-school input.search-field:focus-visible {
+	outline: transparent;
+}
+
+.school-type-filters {
+	padding:0;
+	margin: 1.5rem 0 0 0;
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	max-width: 32rem;
+}
+.school-type-filters .btn {
+	min-width: 8rem;
+}
+
+.no-results-message {
+	padding-top: 3rem;
+	padding-bottom: 3rem;
+}
+
+
+@media screen and (max-width: 960px) {
+	.nav-header-utility li:not(.menu-item-btn) {
+		display: none;
+	}
+}
+/* MD Size */
+@media screen and (max-width: 860px) { 
+	nav img.logo, aside img.logo {
+		transform: translate(0, -1rem);
+	}
+	
+	ul.footer-school-list.two-cols {
+		columns: 1;
+	}
+	.school-section-nav nav ul { 
+		flex-direction: column; 
+		gap: 0.5rem;
+	}
+	.school-section-nav nav ul li {
+		width: 100%;
+		padding: 0;
+	}
+	.school-section-nav nav ul li:not(:last-child) {
+		border-right: 0;
+	}
+
+}
+
+/* SM Size */
+@media screen and (max-width: 480px) {
+	.school-section-nav nav {
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+}
+
+@media screen and (max-width: 380px) {
+	.header-primary-nav .nav-inner {
+		flex-direction: column;
+		row-gap: 0;
+	}
+	.header-primary-nav .nav-inner  .xy-col[data-xy-col*="sm-6"] {
+		flex-basis: 100%;
+		width: 100%;
+		justify-content: center;
+	}
+	.header-primary-nav .nav-inner img.logo {
+		margin-inline: auto;
+	}
+	.header-primary-nav .nav-header-utility ul {
+		justify-content: center;
+	}
+	.mega-menu-header .btn-search {
+		display: none;
+	}
+
+	.site-search-nav {
+		flex-direction: column;
+		row-gap: 1rem;
+	}
+}
