@@ -16,7 +16,13 @@ $GLOBALS['GMAPS_API_KEY'] = get_option('csomaster_google_maps_api_key');
 add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
 
 function enqueue_parent_styles() {
-    wp_enqueue_style( 'parent-style', get_template_directory_uri().'/style.css?v=0.8' );
+	// get the parent object
+    $parent_theme = wp_get_theme()->parent();
+    // get parent version
+    $csomaster_version = '0.1';
+    if (!empty($parent_theme)) $csomaster_version = $parent_theme->Version;
+
+    wp_enqueue_style( 'parent-style', get_template_directory_uri().'/style.css?v='.$csomaster_version );
 }
 
 
