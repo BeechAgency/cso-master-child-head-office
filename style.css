@@ -7,7 +7,7 @@ Author URI: https://beech.agency/
 Template: cso-master
 
 Description: A theme for the CSO Maitland-Newcastle HQ 
-Version: 0.4
+Version: 0.5
 Tested up to: 6.4
 Requires PHP: 8.1
 License: GNU General Public License v2 or later
@@ -357,6 +357,11 @@ header .school-details span {
 .no-results-message {
 	padding-top: 3rem;
 	padding-bottom: 3rem;
+}
+
+footer .has-primary-dark-background-color .social a img, 
+footer .has-secondary-dark-background-color .social a img {
+	filter: none;
 }
 
 
