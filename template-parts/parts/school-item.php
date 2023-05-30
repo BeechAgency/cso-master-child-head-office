@@ -28,7 +28,7 @@
                 echo "<span>$placeIcon <span class='location'>$location</span></span><span>$typeIcon <span class='type'>$school_type</span></span>";
             ?>
         </h6>
-        <h4 class="card-title"><a href="<?= get_the_permalink($id); ?>" class='school_name'><?= get_the_title($id); ?></a></h4>
+        <h4 class="card-title"><a href="<?= get_the_permalink($id); ?>" class='school_name'><?= get_field('school_location_name', $id); ?>, <?= get_the_title($id); ?></a></h4>
 
         <a href="<?= get_the_permalink($id); ?>" class="btn btn-primary schoolbtn">Read More</a>
     </div>

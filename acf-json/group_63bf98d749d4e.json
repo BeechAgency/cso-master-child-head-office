@@ -66,7 +66,7 @@
         },
         {
             "key": "field_63bf99852f2bc",
-            "label": "Text Image",
+            "label": "Principle \/ Text Image",
             "name": "",
             "type": "tab",
             "instructions": "",
@@ -103,6 +103,65 @@
             "key": "field_63bf995d2f2ba",
             "label": "Image",
             "name": "school_principle_image",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_64754ae56ab26",
+            "label": "OOSH \/ Text Image",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_64754b116ab27",
+            "label": "Text (OOSH)",
+            "name": "school_oosh_text",
+            "type": "wysiwyg",
+            "instructions": "Text below the school details section",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_64754b236ab28",
+            "label": "Image (OOSH)",
+            "name": "school_oosh_image",
             "type": "image",
             "instructions": "",
             "required": 0,
@@ -180,5 +239,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1675747936
+    "modified": 1685408564
 }

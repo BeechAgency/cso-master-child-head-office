@@ -19,6 +19,21 @@
     $image_text_fields['position'] = 'image-right';
 
     $text_class_list = 'text-block__text basic has-transparent-background-color has-black-color';
+
+
+    $image_text_fields_oosh = array();
+
+    $image_text_fields_oosh['title'] = null;
+    $image_text_fields_oosh['subtitle'] = null;
+    $image_text_fields_oosh['cta'] = null;
+    $image_text_fields_oosh['cta_secondary'] = null;
+    
+    $image_text_fields_oosh['content'] = $school_data['school_oosh_text'];
+    $image_text_fields_oosh['image'] = $school_data['school_oosh_image'];
+    $image_text_fields_oosh['position'] = 'image-right';
+
+
+
     $text_fields = array();
 
     $text_fields['style'] = 'columns';
@@ -46,7 +61,7 @@
 	<section class="block text-block__text columns  has-white-background-color  has-primary-dark-color" id="rowContent" data-block-style="text-block__text columns">
 		<div class="xy-grid">
             <div class="xy-col xy-grid text-column-wrapper" data-xy-col="12">
-                <div class="xy-col text-column school-details" data-xy-col="xl-4 lg-4 md-6 sm-12" data-xy-start="auto">
+                <div class="xy-col text-column school-details <?= $school_data['school_crest_alignment'] ?>" data-xy-col="xl-4 lg-4 md-6 sm-12" data-xy-start="auto">
                     <?= $school_data['school_crest']; ?>
                     <h3><?= the_title(); ?>, <span class="location"><?= $school_data['school_location_name']; ?></span></h3>
                 </div>
@@ -126,11 +141,21 @@
 		</div>
 	</section>
 
-    <!-- Text and Image -->
+    <!-- Text and Image // PRINCIPLE -->
     <?php if(!empty($image_text_fields['content'])) : ?>
 	<section class="block text-block__image_text image-inset image-right has-white-background-color has-primary-dark-color" id="rowContent" data-block-style="principal-content">
 		<div class="xy-grid">
 			<?php get_template_part( "template-parts/blocks/text/block__image_text", null, $image_text_fields ); ?>
+		</div>
+	</section>
+    <?php endif; ?>
+
+
+    <!-- Text and Image // OOSH -->
+    <?php if(!empty($image_text_fields_oosh['content'])) : ?>
+	<section class="block text-block__image_text image-inset image-right has-white-background-color has-primary-dark-color" id="rowContent" data-block-style="oosh-content">
+		<div class="xy-grid">
+			<?php get_template_part( "template-parts/blocks/text/block__image_text", null, $image_text_fields_oosh ); ?>
 		</div>
 	</section>
     <?php endif; ?>

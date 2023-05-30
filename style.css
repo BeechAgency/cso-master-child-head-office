@@ -7,7 +7,7 @@ Author URI: https://beech.agency/
 Template: cso-master
 
 Description: A theme for the CSO Maitland-Newcastle HQ 
-Version: 0.3
+Version: 0.4
 Tested up to: 6.4
 Requires PHP: 8.1
 License: GNU General Public License v2 or later
@@ -105,6 +105,10 @@ nav.header-alternative img.logo {
     transform: translate(0, 1rem);
 }
 
+footer .flow-columns {
+	columns: 4;
+}
+
 ul.footer-school-list, ul.school-list {
 	margin: 1rem 0 2rem; 
 	padding: 0;
@@ -113,7 +117,7 @@ ul.footer-school-list, ul.school-list {
 }
 
 ul.footer-school-list li {
-	margin-bottom: 0.5rem;
+	margin-bottom: 0.33rem;
 }
 
 ul.footer-school-list.two-cols {
@@ -166,6 +170,18 @@ footer .phone { margin-bottom: 0; }
 .school-details img {
 	margin-bottom: 2rem;
 }
+.block.columns .text-column.school-details.align-center,
+.block.columns .text-column.school-details.align-right {
+	padding-right: 0;
+}
+.school-details.align-center { text-align: center; }
+.school-details.align-center img { margin-inline: auto; }
+
+.school-details.align-left { text-align: left; }
+.school-details.align-left img { margin-inline: 0 auto; }
+
+.school-details.align-right { text-align: right; }
+.school-details.align-right img { margin-inline: auto 0; }
 
 .text-block__text .school-details span.location {/* display: block; */}
 
@@ -358,6 +374,11 @@ header .school-details span {
 	ul.footer-school-list.two-cols {
 		columns: 1;
 	}
+
+	footer .xy-grid:first-child .xy-col.flow-columns:first-child {
+		display: block;
+		columns: 2;
+	}
 	.school-section-nav nav ul { 
 		flex-direction: column; 
 		gap: 0.5rem;
@@ -377,6 +398,11 @@ header .school-details span {
 	.school-section-nav nav {
 		flex-direction: column;
 		gap: 1.5rem;
+	}
+
+	footer .xy-grid:first-child .xy-col.flow-columns:first-child {
+		display: block;
+		columns: 1;
 	}
 }
 

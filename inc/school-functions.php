@@ -74,7 +74,9 @@ function get_school_data( $pageId = null ) {
         'school_address', 
         'school_mailing_address', 
         'school_annual_report', 
-        'school_news_endpoint'
+        'school_news_endpoint',
+        'school_oosh_text',
+        'school_crest_alignment'
     );
 
     foreach( $fields as $field ) {
@@ -82,6 +84,7 @@ function get_school_data( $pageId = null ) {
     } 
 
     $school_data['school_principle_image'] = get_acf_image('school_principle_image', 'full', 'main', $pageId);
+    $school_data['school_oosh_image'] = get_acf_image('school_oosh_image', 'full', 'main', $pageId);
     $school_data['school_crest'] = get_acf_image('school_crest', 'full', 'main', $pageId);
 
     //var_dump($school_data);
@@ -119,6 +122,11 @@ function get_parish_data( $tax_id = null ) {
     $parish['cta']= get_field('parish_cta', $acf_tax_id);
 
     return $parish;
+}
+
+// Custom comparison function
+function cso_hq_compare_by_display_name($a, $b) {
+    return strcmp($a['display_name'], $b['display_name']);
 }
 
 function cso_hq_get_school_list_by_type( $type = null ) {
@@ -164,12 +172,16 @@ function cso_hq_get_school_list_by_type( $type = null ) {
                 'postId' => get_the_ID(),
                 'imageId' => $imageId,
                 'imageSrcSet' => $imageSrcSet,
-                'imageSrc'=> $imageSrc[0]
+                'imageSrc'=> $imageSrc[0],
+                'location' => get_field('school_location_name'),
+                'display_name' =>  get_field('school_location_name') .', '. get_the_title()
             );
 
         endwhile;
     endif;
     wp_reset_postdata();
+
+    usort($output, 'cso_hq_compare_by_display_name');
 
     return $output;
 }
@@ -178,6 +190,6 @@ function cso_hq_list_schools( $list = array() ) {
     foreach( $list as $school ) {
         extract($school);
 
-        echo "<li class='school-list-item type-$type'><a href='$link'>$name</a></li>";
+        echo "<li class='school-list-item type-$type'><a href='$link'>$display_name</a></li>";
     }
 }
