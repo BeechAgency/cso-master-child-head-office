@@ -7,7 +7,7 @@ Author URI: https://beech.agency/
 Template: cso-master
 
 Description: A theme for the CSO Maitland-Newcastle HQ 
-Version: 0.5
+Version: 0.6
 Tested up to: 6.4
 Requires PHP: 8.1
 License: GNU General Public License v2 or later
@@ -44,17 +44,34 @@ Underscores is distributed under the terms of the GNU GPL v2 or later.
 
 h1, h2 { font-weight: var(--fw-bold); }
 
+
+.block.has-school-style::after {
+	top: 50%;
+	translate: 0% -50%;
+	right: 5vw;
+}
+
 .block.has-school-style.has-secondary-dark-background-color::after,
 .block.has-school-style.has-primary-dark-background-color::after,
 .block.has-school-style.has-black-background-color::after {
-	content:  url('./images/school-style-white.svg');
+	content:  url('./images/csomn-hq-school-style.png');
+	opacity: 0.1;
 }
 
 .block.has-school-style.has-secondary-light-background-color::after,
 .block.has-school-style.has-primary-light-background-color::after,
 .block.has-school-style.has-white-background-color::after,
 .block.has-school-style.has-transparent-background-color::after {
-	content:  url('./images/school-style-black.svg');
+	content:  url('./images/csomn-hq-school-style-black.png');
+	opacity: 0.1;
+}
+
+.has-primary-light-background-color .btn:not(.btn-secondary) {
+	--base-background-color: transparent;
+}
+.has-primary-light-background-color .btn:hover {
+	--base-background-color: var(--primary-light);
+
 }
 
 .block.text-block__image_text.image-inset.block.has-primary-dark-background-color {
