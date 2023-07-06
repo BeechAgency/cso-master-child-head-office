@@ -65,7 +65,9 @@ h1, h2 { font-weight: var(--fw-bold); }
 	content:  url('./images/csomn-hq-school-style-black.png');
 	opacity: 0.1;
 }
-
+.has-primary-light-background-color .has-primary-light-background-color {
+	background: transparent;
+}
 .has-primary-light-background-color .btn:not(.btn-secondary) {
 	--base-background-color: transparent;
 }
@@ -95,6 +97,10 @@ h1, h2 { font-weight: var(--fw-bold); }
 	z-index: 1;
 }
 
+.block .text-wrapper.text-center {
+	text-align: center;
+}
+
 .has-primary-light-background-color {
 	background: transparent linear-gradient(220deg, var(--gradient-primary-end) 0%, var(--primary-light) 84%, var(--primary-light) 100%) 0% 0% no-repeat padding-box;
 }
@@ -120,6 +126,10 @@ nav img.logo, aside img.logo {
 nav.header-alternative img.logo {
 	margin-top: -2rem;
     transform: translate(0, 1rem);
+}
+
+.header-auxiliary-nav p {
+	opacity: 0.8;
 }
 
 footer .flow-columns {

@@ -83,7 +83,7 @@
     <?php endif; ?>
 
     <!-- School Info -->
-	<section class="block text-block__text columns  has-primary-light-background-color  has-primary-dark-color" id="rowDetails" data-block-style="school-info">
+	<section class="block text-block__text columns  has-primary-light-background-color  has-black-color" id="rowDetails" data-block-style="school-info">
 		<div class="xy-grid">
             <div class="xy-col xy-grid text-column-wrapper" data-xy-col="12">
                 <div class="xy-col text-column school-details" data-xy-col="xl-6 lg-6 md-6 sm-12" data-xy-start="auto">
@@ -103,13 +103,13 @@
                     
                     <?= conditionally_output_field($school_data['school_email'], '<h4>Contact</h4><p class="details email"><a href="mailto:'.$school_data['school_email'].'"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="7.5" viewBox="0 0 10 7.5">
   <g id="icon_mail" transform="translate(0 -8)">
-    <path id="Path_492" data-name="Path 492" d="M9.375,8H.625A.625.625,0,0,0,0,8.625V9.674l5,2,5-2V8.625A.625.625,0,0,0,9.375,8ZM0,10.695v4.18a.625.625,0,0,0,.625.625h8.75A.625.625,0,0,0,10,14.875v-4.18l-5,2Z" fill="#2b3990"/>
+    <path id="Path_492" data-name="Path 492" d="M9.375,8H.625A.625.625,0,0,0,0,8.625V9.674l5,2,5-2V8.625A.625.625,0,0,0,9.375,8ZM0,10.695v4.18a.625.625,0,0,0,.625.625h8.75A.625.625,0,0,0,10,14.875v-4.18l-5,2Z" fill="#000000"/>
   </g>
 </svg>
 ', '</a></p>'); ?>
                     <?= conditionally_output_field($school_data['school_phone'], '<p class="details phone"><a href="tel:'.$school_data['school_phone'].'"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="9.994" viewBox="0 0 10 9.994">
   <g id="icon_phone" transform="translate(-1.326 -1.334)">
-    <path id="Path_491" data-name="Path 491" d="M5.377,3.627A3.094,3.094,0,0,0,3.619,1.365a.332.332,0,0,0-.2-.027c-1.8.3-2.074,1.349-2.085,1.392a.338.338,0,0,0,.007.184c2.151,6.673,6.62,7.91,8.09,8.316.113.031.206.057.277.08a.325.325,0,0,0,.1.016.337.337,0,0,0,.141-.031,2.761,2.761,0,0,0,1.366-2.152.34.34,0,0,0-.033-.209A3.232,3.232,0,0,0,9.17,7.461a.333.333,0,0,0-.3.072,4.553,4.553,0,0,1-1.447.9A6.425,6.425,0,0,1,4.356,5.319a3.654,3.654,0,0,1,.933-1.431A.34.34,0,0,0,5.377,3.627Z" transform="translate(0)" fill="#2b3990"/>
+    <path id="Path_491" data-name="Path 491" d="M5.377,3.627A3.094,3.094,0,0,0,3.619,1.365a.332.332,0,0,0-.2-.027c-1.8.3-2.074,1.349-2.085,1.392a.338.338,0,0,0,.007.184c2.151,6.673,6.62,7.91,8.09,8.316.113.031.206.057.277.08a.325.325,0,0,0,.1.016.337.337,0,0,0,.141-.031,2.761,2.761,0,0,0,1.366-2.152.34.34,0,0,0-.033-.209A3.232,3.232,0,0,0,9.17,7.461a.333.333,0,0,0-.3.072,4.553,4.553,0,0,1-1.447.9A6.425,6.425,0,0,1,4.356,5.319a3.654,3.654,0,0,1,.933-1.431A.34.34,0,0,0,5.377,3.627Z" transform="translate(0)" fill="#000000"/>
   </g>
 </svg>
 ', '</a></p>'); ?>
@@ -167,10 +167,12 @@
     ?>
 	<section class="block text-block__image_text image-inset image-left has-white-color has-primary-dark-background-color has-special-gradient-top" id="rowContent" data-block-style="parish-information">
 		<div class="xy-grid">
+            <?php if (!empty($parish['image'])): ?>
 			 <div class="xy-col image-wrapper type-image" data-xy-col="xl-6 lg-6 md-12">
                 <?= $parish['image']; ?>
             </div>
-            <div class="xy-col text-wrapper" data-xy-col="xl-4 lg-5 md-12" data-xy-start="xl-8 lg-8 md-auto sm-auto" data-xy-items="align-center">
+            <?php endif; ?>
+            <div class="xy-col text-wrapper<?= empty($parish['image']) ? ' text-center' : ''?>" data-xy-col="<?= empty($parish['image']) ? 'xl-10 lg-10 md-12' : 'xl-4 lg-5 md-12'; ?>" data-xy-start="<?= empty($parish['image']) ? 'xl-2 lg-2 md-auto sm-auto' : 'xl-8 lg-8 md-auto sm-auto' ?> " data-xy-items="align-center">
                 <h5 class="has-primary-light-color">Associated Parish</h5>    
                 <h2>Parish of <?= $parish['name']; ?></h2>   
                 
@@ -227,7 +229,7 @@
                 </div> 
                 <div class="xy-col text-center" data-xy-col="12">
                     <div class="button-row">
-                        <a href="#" class="btn btn-secondary">See more schools</a>
+                        <a href="/schools" class="btn btn-secondary">See more schools</a>
                     </div>
                 </div>
             </div>

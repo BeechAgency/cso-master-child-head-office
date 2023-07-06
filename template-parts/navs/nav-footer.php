@@ -19,7 +19,7 @@
     
 ?>
 <footer>
-    <div class="xy-grid has-gutter <?= $footer_background_color ?> has-primary-dark-color">
+    <div class="xy-grid has-gutter <?= $footer_background_color ?> has-black-color">
         <div class="xy-col flow-columns" data-xy-col="xl-12 lg-12 md-12 sm-12">
             <h5>K–12 Schools</h5>
             <ul class="footer-school-list">

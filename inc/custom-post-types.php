@@ -34,7 +34,7 @@ function cso_hq_register_school_post_type() {
 	);
 	$rewrite = array(
 		'slug'                  => 'schools',
-		'with_front'            => true,
+		'with_front'            => false,
 		'pages'                 => true,
 		'feeds'                 => true,
 	);
