@@ -135,7 +135,7 @@
 
                     </div>
 
-                    <p class="details download"><a href="<?= wp_get_attachment_url($school_data['school_annual_report']); ?>" download target="_blank"><img src="<?= "$theme_path/images/download.svg" ?>" class="icon" />Download 2021 Annual Report </a></p>
+                    <p class="details download"><a href="<?= wp_get_attachment_url($school_data['school_annual_report']); ?>" download target="_blank"><img src="<?= "$theme_path/images/download.svg" ?>" class="icon" />Download Our Latest Annual Report</a></p>
                 </div>
             </div>
 		</div>
