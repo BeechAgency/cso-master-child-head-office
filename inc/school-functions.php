@@ -228,8 +228,9 @@ function get_school_email_list() {
             
             $title = get_the_title();
             $email = get_field('school_email', get_the_ID());
-    
-            $schools[] = "$title|$email";
+            $location = get_field('school_location_name', get_the_ID());
+
+            $schools[] = "$location, $title|$email";
             /*$schools[] = array(
                 'title' => $title,
                 'email' => $email
@@ -239,5 +240,7 @@ function get_school_email_list() {
         wp_reset_postdata(); // Restore the original post data
     }
     
+    sort($schools);
+
     return $schools;
 }
