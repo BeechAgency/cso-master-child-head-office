@@ -23,6 +23,10 @@ function csomaster_set_custom_header_data() {
         $cta1 = get_field('school_url');
         $cta2 = get_field('school_tour_url'); 
 
+        if(!empty($cta2)) {
+            $cta2['url'] .= "?cso_school=".get_field('school_email');
+        }
+
         $header_data['header_text_cta'] = !empty($cta1) ? array('text' => $cta1['title'].$externalIcon, 'link' => $cta1['url'], 'classes' => 'btn-primary has-external-icon') : null; // Group with two properties: text and link
         $header_data['header_text_cta_secondary'] = !empty($cta2) ? array('text' => $cta2['title'], 'link' => $cta2['url'], 'classes' => 'btn-primary') : null; // Group with two properties: text and link
 
