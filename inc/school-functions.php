@@ -193,3 +193,51 @@ function cso_hq_list_schools( $list = array() ) {
         echo "<li class='school-list-item type-$type'><a href='$link'>$display_name</a></li>";
     }
 }
+
+
+/** 
+ * Dynamically create list in grav forms of the schools
+ */
+
+/* Add gforms predefined choices */
+add_filter( 'gform_predefined_choices', 'st_nicks_add_predefined_choice' );
+function st_nicks_add_predefined_choice( $choices ) {
+   $schools = get_school_email_list();
+
+   $choices['School List'] = $schools;
+
+   return $choices;
+}
+
+
+function get_school_email_list() {
+    $args = array(
+        'post_type' => 'school', // Replace with your custom post type name
+        'posts_per_page' => -1,
+        'orderby' => 'title', 
+        'order' => 'ASC',      
+    );
+    
+    $query = new WP_Query($args);
+    
+    $schools = array();
+    
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            
+            $title = get_the_title();
+            $email = get_field('school_email', get_the_ID());
+    
+            $schools[] = "$title|$email";
+            /*$schools[] = array(
+                'title' => $title,
+                'email' => $email
+            );*/
+        }
+    
+        wp_reset_postdata(); // Restore the original post data
+    }
+    
+    return $schools;
+}

@@ -128,8 +128,8 @@
                         </a>
                         <?php endif; ?>
                         <?php if(!empty($school_data['school_tour_url'])) : ?>
-                        <a href="<?= $school_data['school_tour_url']['url']; ?>" class="btn btn-primary"> 
-                            <?= $school_data['school_tour_url']['title'] ?>
+                        <a href="<?= $school_data['school_tour_url']['url']."?cso_school=".$school_data['school_email']; ?>" class="btn btn-primary"> 
+                            <?= $school_data['school_tour_url']['title']; ?>
                         </a>
                         <?php endif; ?>
 
