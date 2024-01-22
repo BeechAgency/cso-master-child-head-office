@@ -7,7 +7,7 @@ Author URI: https://beech.agency/
 Template: cso-master
 
 Description: A theme for the CSO Maitland-Newcastle HQ 
-Version: 0.10
+Version: 0.11
 Tested up to: 6.4
 Requires PHP: 8.1
 License: GNU General Public License v2 or later
@@ -86,7 +86,7 @@ h1, h2 { font-weight: var(--fw-bold); }
 	right: 0;
 	content: '';
 	background-image: url('./images/corner-gradient-bottom-light-blue.svg');
-	background-position: center right;
+	background-position: bottom right;
 	background-size: contain;
 	width: 36%;
 	height: 50%;
@@ -134,6 +134,7 @@ nav.header-alternative img.logo {
 
 footer .flow-columns {
 	columns: 4;
+	gap: 2rem;
 }
 
 ul.footer-school-list, ul.school-list {
@@ -144,7 +145,7 @@ ul.footer-school-list, ul.school-list {
 }
 
 ul.footer-school-list li {
-	margin-bottom: 0.33rem;
+	margin-bottom: 0.75rem;
 }
 
 ul.footer-school-list.two-cols {
@@ -163,6 +164,7 @@ footer .term-dates .pipe:last-of-type { display: none; }
 
 footer .footer-logo img {
 	max-width: 18rem;
+	width: 100%;
 	margin-top: 0;
 }
 
@@ -389,6 +391,25 @@ header .school-details span {
 footer .has-primary-dark-background-color .social a img, 
 footer .has-secondary-dark-background-color .social a img {
 	filter: none;
+}
+
+.card, .gallery-wrapper figure {
+	border-radius: 0.5rem;
+	overflow: hidden;
+}
+.card.style-lines, .card.style-lines-grid {
+	border: var(--text-color) solid 1px;
+}
+
+.has-secondary-light-background-color .tab-header__item.active, 
+.has-secondary-light-background-color .tab-header__item:hover {
+	background-color: var(--base-background-color);
+	color: var(--black);
+}
+.tab-header__item svg path,
+.tab-header__item.active svg path, 
+.tab-header__item:hover svg path {
+	stroke: currentColor;
 }
 
 
