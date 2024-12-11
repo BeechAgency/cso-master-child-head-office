@@ -226,6 +226,10 @@ function ensureNSW(query) {
     query = `${query}, NSW`;
   }
 
+  if(hasPostcode && query.length < 5) {
+    query = `${query}, NSW`;
+  }
+
   console.log("query", query, hasPostcode, hasStateOrTerritory);
 
   return query;
@@ -350,6 +354,7 @@ function initMap() {
   map = new google.maps.Map(mapEl, {
     center: { lat: -32.9659407, lng: 151.700276 },
     zoom: 10,
+    clickableIcons: false,
   });
 
   // Initial population of map
@@ -376,7 +381,7 @@ function initMap() {
 function centerMapOnSearchLocation() {
     // Center the map on the search location
     map.setCenter(searchLocationGeo);
-    map.setZoom(11);
+    map.setZoom(13);
 
     // Add a custom marker at the search location
     const searchMarker = new google.maps.Marker({
@@ -594,6 +599,33 @@ function handleSearchFilterButtons() {
     });
 }
 
+function handleMobileDrawerEvents() {
+    const drawerNav = document.querySelector(".school-section-nav nav");
+    const applyButton = document.getElementById("applyFiltersButton");
+    const closeButton = document.getElementById("closeFiltersButton");
+    const clearButton = document.getElementById("clearSearchButton");
+    const mobileFilterToggle = document.getElementById("mobileFilterToggle");
+
+    function handleCloseDrawer() {
+        drawerNav.classList.remove('active');
+    }
+
+    mobileFilterToggle.addEventListener('click', () => {
+        drawerNav.classList.toggle('active');
+    });
+
+    applyButton.addEventListener('click', () => {
+        handleCloseDrawer();
+    });
+    closeButton.addEventListener('click', () => {
+        handleCloseDrawer();
+    });
+    clearButton.addEventListener('click', () => {
+        handleCloseDrawer();
+    });
+
+}
+
 
 window.addEventListener('load', () => {
     initMap();
@@ -604,4 +636,5 @@ window.addEventListener('load', () => {
     handleClearSearchButton();
     handleSearchFilterButtons();
     initSearchAndFilters(); 
+    handleMobileDrawerEvents();
 });

@@ -48,7 +48,7 @@ get_header();
                                     <path id="Path_404" data-name="Path 404" d="M1959,881l9.558,9.558" transform="translate(-841.531 -765.258)" fill="none" stroke="currentColor" stroke-width="1.5"/>
                                 </g>
                             </svg>
-                            <input type="search" class="search-field" placeholder="Enter keywords..." id="schoolPageSearch" />
+                            <input type="search" class="search-field" placeholder="Enter location or keyword..." id="schoolPageSearch" />
                             <button class="search-submit" id="schoolPageSearchSubmit">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="38.453" height="29.921" viewBox="0 0 38.453 29.921">
                                     <defs>
@@ -79,10 +79,32 @@ get_header();
         </section>
 
         <section class="block school-section-nav <?= $school_list_color.' '.$school_list_background_color ?>" data-block-style="section-navigation">
+            <button class="mobile-filter-toggle" id="mobileFilterToggle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M21 12L21 4H23V7L30 7V9L23 9V12H21ZM2 7H18V9H2V7ZM30 15V17H12V15H30ZM16 25V23H2V25H16ZM2 15H7L7 12H9L9 20H7V17H2V15ZM30 25H21V28H19L19 20H21V23H30V25Z" fill="currentColor"/>
+                </svg>
+                Filter Results
+            </button>
             <nav>
+                <div class="mobile-filter-header">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M21 12L21 4H23V7L30 7V9L23 9V12H21ZM2 7H18V9H2V7ZM30 15V17H12V15H30ZM16 25V23H2V25H16ZM2 15H7L7 12H9L9 20H7V17H2V15ZM30 25H21V28H19L19 20H21V23H30V25Z" fill="currentColor"/>
+                        </svg>    
+                        Filters
+                    </div>
+                    <button class="mobile-filter-close" id="closeFiltersButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14.884" height="14.885" viewBox="0 0 14.884 14.885">
+                            <g id="Group_274" data-name="Group 274" transform="translate(-1203.591 -91.023)">
+                                <path id="Path_474" data-name="Path 474" d="M0,0H19.55" transform="translate(1204.121 91.554) rotate(45)" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                                <path id="Path_477" data-name="Path 477" d="M0,0H19.55" transform="translate(1217.945 91.554) rotate(135)" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                            </g>
+                        </svg>
+                    </button>
+                </div>
                 <b>
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M21 12L21 4H23V7L30 7V9L23 9V12H21ZM2 7H18V9H2V7ZM30 15V17H12V15H30ZM16 25V23H2V25H16ZM2 15H7L7 12H9L9 20H7V17H2V15ZM30 25H21V28H19L19 20H21V23H30V25Z" fill="#2b3990"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M21 12L21 4H23V7L30 7V9L23 9V12H21ZM2 7H18V9H2V7ZM30 15V17H12V15H30ZM16 25V23H2V25H16ZM2 15H7L7 12H9L9 20H7V17H2V15ZM30 25H21V28H19L19 20H21V23H30V25Z" fill="currentColor"/>
                     </svg>    
                     Filter By Age
                 </b>
@@ -100,7 +122,10 @@ get_header();
                     <li><a class="btn btn-primary" data-school-type="primary" href="#rowSchoolType_primary">Primary</a></li>
                     <li><a class="btn btn-primary" data-school-type="secondary" href="#rowSchoolType_secondary">Secondary</a></li>
                 </ul>
-                <a href="#" class="clear-search" id="clearSearchButton">Clear Search</a>
+                <div class="nav-button-group">
+                    <a href="#" class="clear-search" id="clearSearchButton">Clear Search</a>
+                    <button class="apply-search btn btn-secondary" id="applyFiltersButton">Apply Filters</button>
+                </div>
             </nav>
         </section>
         <section class="block school-map has-primary-dark-color" data-block-style="school-map">
