@@ -118,6 +118,7 @@ header.has-black-background-color .btn:hover {
 nav img.logo, aside img.logo {
 	transform: translate(0, -1rem);
 	max-height: 4.56rem;
+	max-width: 100%;
 }
 .site-search-outer img.logo {
 	width: auto;
@@ -279,12 +280,14 @@ header .school-details span {
 	width: 100%;
 }
 
-.school-card .card-date {
+.school-card .card-date,
+#map .card-date {
 	display: flex;
 	align-items: center;
 	gap: 1.5rem;
 }
-.school-card .card-date span { display: flex; align-items: center; gap: 0.5rem;}
+.school-card .card-date span,
+#map .card-date span { display: flex; align-items: center; gap: 0.5rem;}
 
 
 .school-type-filters .btn.active {
@@ -295,24 +298,36 @@ header .school-details span {
 	--base-background-color: var(--primary-dark);
 	--text-color: var(--primary-light);
 }
+.school-section-nav {
+	--_border-clr: #2b39903e;
+	border-bottom: solid 1px var(--_border-clr);
+	border-top: solid 1px var(--_border-clr);
+	margin-top: 2rem;
 
+}
 .school-section-nav nav {
 	display: flex;
-	gap: 3rem;
-	padding-top: 2rem;
-	padding-bottom: 2rem;
-	border-bottom: solid 1px #2b39903e;
+	gap: 1rem;
+	padding-block: 1.5rem;
+	align-items: center;
+}
+
+.school-section-nav nav > b {
+	border-right: solid 1px var(--_border-clr);
+	padding-right: 1rem;
 }
 
 .school-section-nav nav ul {
-	margin: 0; padding: 0;
+	margin: 0;
+	padding: 0;
 	display: flex;
+	gap: 0.5rem;
 }
-.school-section-nav nav ul li {
-	padding-inline: 2rem;
+.school-section-nav nav ul .btn {
+	padding: 0.25rem 1rem;
 }
-.school-section-nav nav ul li:not(:last-child) {
-	border-right: 1px solid var(--primary-dark);
+.school-section-nav nav > a {
+	margin-left: auto;
 }
 .block.cards-block__image-cards.school-type-list, .block.schools-block__school_list {
 	padding-block: 4rem;
@@ -321,11 +336,12 @@ header .school-details span {
 	padding-block: 6rem;
 }
 .find-a-school {
-	margin-bottom: 3rem;
+	margin-top: 3rem;
 }
 
 .find-a-school.no-margin {
     margin-bottom: 0;
+    margin-top: 0;
 }
 .find-a-school > label {
 	border-bottom: solid 1px currentColor;
@@ -412,7 +428,113 @@ footer .has-secondary-dark-background-color .social a img {
 	stroke: currentColor;
 }
 
+/** School Map **/
+.block.school-search {
+	padding-block: 4rem;
+}
+.school-search-container {
+	position: relative;
+}
 
+.block.school-section-nav {
+	position: sticky;
+	top: -1px;
+	z-index: 10;
+}
+.block.school-map {
+	padding-bottom: 3rem;
+}
+.block.school-map ~ .block {
+	padding-top: 0;
+	padding-bottom: 6rem;
+}
+#map {
+	aspect-ratio: 16 / 9;
+	width: 100%;
+	overflow: hidden;
+	/*max-height: 50vh;*/
+	transition: all 350ms ease-in-out;
+	
+}
+
+#map.hide-map {
+	display: none;
+	
+}
+
+#map div[role="dialog"] {
+	background-color: var(--primary-dark);
+	--base-background-color: var(--primary-dark);
+	--text-color: var(--white);
+	color: var(--white);
+}
+
+#map .gm-ui-hover-effect>span {
+	background-color: var(--white);
+}
+#map .gm-style-iw-d {
+	overflow: visible !important;
+}
+#map .map-marker--info-window {
+	max-width: 19rem;
+	padding: 0rem 3rem 0 1rem;
+	translate: 0 -1.75rem;
+}
+
+#map .map-marker--info-window h4 {
+	font-size: var(--fs-h5);
+	margin-bottom: 2rem;
+	line-height: 1.3;
+}
+
+#map .card-date {
+	margin-bottom: 1rem;
+	font-size: var(--fs-s1);
+}
+#map .gm-style .gm-style-iw-tc::after {
+	background: var(--primary-dark);
+}
+
+.school-section-nav nav > b {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+}
+.school-section-nav nav > b svg {
+	max-width: 1.5rem;
+}
+.school-section-nav nav .btn.active {
+	background-color: var(--primary-dark);
+	color: var(--white);
+}
+
+.search-results-message {
+	margin-block: 0.75rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.search-results-message .hide-map {
+	cursor: pointer;
+	padding: 0.5rem 1rem;
+	background-color: var(--primary-dark);
+	color: var(--white);
+	border: solid 1px var(--primary-dark);
+	border-radius: 0.5rem;
+	transition: all 150ms ease;
+
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+.search-results-message .hide-map:hover {
+	background-color: var(--black);
+}
+
+/**
+ * Media Queries
+ */
 @media screen and (max-width: 960px) {
 	.nav-header-utility li:not(.menu-item-btn) {
 		display: none;

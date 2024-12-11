@@ -133,6 +133,63 @@ function cso_hq_compare_by_display_name($a, $b) {
     return strcmp($a['display_name'], $b['display_name']);
 }
 
+function get_school_type_slug($post_id) {
+    // Get terms associated with the post
+    $terms = wp_get_post_terms($post_id, 'school_type');
+    
+    // Check if terms were returned
+    if (!is_wp_error($terms) && !empty($terms)) {
+        // Return the slug of the first term
+        return $terms[0]->slug;
+    }
+
+    // Return null if no terms are found
+    return null;
+}
+
+function cso_hq_get_school_list() {
+    $numberOfPosts	= 72;
+
+    $output = array();
+
+    $args = array(
+        'posts_per_page' => $numberOfPosts,
+        'post_type' => 'school',
+        'order'=>'ASC',
+        'orderby'=>'title'
+    );
+
+    $schoolPosts = new WP_Query(
+        $args
+    );
+    
+    if( $schoolPosts->have_posts() ) : 
+        while( $schoolPosts->have_posts() ): $schoolPosts->the_post();
+
+            $imageId = get_post_thumbnail_id(null, 'large');
+            $imageSrcSet = wp_get_attachment_image_srcset($imageId, 'large');
+            $imageSrc = wp_get_attachment_image_src($imageId, 'large');
+
+            
+            $output[] = array(
+                'name' => get_the_title(),
+                'link' => get_the_permalink(),
+                'type' => get_school_type_slug(get_the_ID()),
+                'postId' => get_the_ID(),
+                'imageId' => $imageId,
+                //'imageSrcSet' => $imageSrcSet,
+                //'imageSrc'=> $imageSrc[0],
+                'location' => get_field('school_location_name'),
+                'display_name' =>  get_field('school_location_name') .', '. get_the_title(),
+                'map_location' => get_field('school_map_location')
+            );
+
+        endwhile;
+    endif;
+
+    return $output;
+}
+
 function cso_hq_get_school_list_by_type( $type = null ) {
     $output = array();
     $postType = 'school';
@@ -176,7 +233,7 @@ function cso_hq_get_school_list_by_type( $type = null ) {
                 'postId' => get_the_ID(),
                 'imageId' => $imageId,
                 'imageSrcSet' => $imageSrcSet,
-                'imageSrc'=> $imageSrc[0],
+                'imageSrc'=> is_array($imageSrc) ? $imageSrc[0] : $imageSrc,
                 'location' => get_field('school_location_name'),
                 'display_name' =>  get_field('school_location_name') .', '. get_the_title()
             );
