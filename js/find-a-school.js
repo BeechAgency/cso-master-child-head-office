@@ -173,13 +173,6 @@ function initSearchAndFilters() {
         e.preventDefault();
         document.querySelector('.school-section-nav').scrollIntoView();
     });
-
-    document.querySelector('form.find-a-school').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            document.querySelector('.school-section-nav').scrollIntoView();
-        }
-    });
 }
 
 /**
@@ -376,8 +369,6 @@ function initMap() {
 }
 
 
-
-
 function centerMapOnSearchLocation() {
     // Center the map on the search location
     map.setCenter(searchLocationGeo);
@@ -433,56 +424,74 @@ function handleListItemVisibility( schoolsToDisplay = [] ) {
     handleUpdateResultCount(display_ids.length);
 }
 
+function handleSearch() {
+  // Get the search field
+  const searchField = document.getElementById("schoolPageSearch");
+
+  // Extract the search term value
+  const searchTerm = searchField.value;
+
+  // Validate the term to ensure it is an address
+  const address = ensureNSW(searchTerm);
+  searchLocation = address;
+
+  console.log("Be searching!", address);
+
+  const radiusInput = parseFloat(searchRadius);
+
+  if (!address || !radiusInput) {
+    console.error("Please provide a valid address and radius.");
+    return;
+  }
+
+  // Use Geocoding API to convert address to lat/lng
+  const geocoder = new google.maps.Geocoder();
+
+  // Attempt Geocoding the address term
+  geocoder.geocode({ address: address }, (results, status) => {
+    console.log("Attempt geocoding address");
+
+    if (status !== "OK" && !results)
+      return console.error("Geocoding failed: " + status);
+
+    const location = results[0].geometry.location;
+
+    // Setting this globally so we can resuse it
+    searchLocationGeo = location;
+    searchLocationResults = results[0];
+
+    console.log("This be the geo'd location: ", location);
+
+    // Centre the map on the location
+    centerMapOnSearchLocation();
+
+    // Handle the markers based on the geocoded location
+    handleGeoSearchMarkers();
+  });
+}
+
 
 function initPageSearchButtonHandler() {
 
     const searchPageSubmitButton = document.getElementById("schoolPageSearchSubmit");
     if(!searchPageSubmitButton) return;
 
+    const form = document.querySelector("form.find-a-school");
+
     searchPageSubmitButton.addEventListener("click", () => {
-        // Get the search field
-        const searchField = document.getElementById("schoolPageSearch");
-
-        // Extract the search term value
-        const searchTerm = searchField.value;
-        
-        // Validate the term to ensure it is an address
-        const address = ensureNSW(searchTerm);
-        searchLocation = address;
-
-        console.log('Be searching!', address);
-
-        const radiusInput = parseFloat(searchRadius);
-
-        if (!address || !radiusInput) {
-            console.error("Please provide a valid address and radius.");
-            return;
-        }
-
-        // Use Geocoding API to convert address to lat/lng
-        const geocoder = new google.maps.Geocoder();
-
-        // Attempt Geocoding the address term
-        geocoder.geocode({ address: address }, (results, status) => {
-            console.log("Attempt geocoding address");
-            
-            if( status !== 'OK' && !results ) return console.error('Geocoding failed: ' + status);
-
-            const location = results[0].geometry.location;
-
-            // Setting this globally so we can resuse it
-            searchLocationGeo = location;
-            searchLocationResults = results[0];
-
-            console.log("This be the geo'd location: ", location);
-
-            // Centre the map on the location
-            centerMapOnSearchLocation();
-
-            // Handle the markers based on the geocoded location
-            handleGeoSearchMarkers();
-        });
+        handleSearch(); 
+        document.querySelector(".school-section-nav").scrollIntoView();
     });
+
+
+    
+      form.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          document.querySelector(".school-section-nav").scrollIntoView();
+          handleSearch(); 
+        }
+      });
 }
 
 function handleGeoSearchMarkers() {
@@ -637,4 +646,5 @@ window.addEventListener('load', () => {
     handleSearchFilterButtons();
     initSearchAndFilters(); 
     handleMobileDrawerEvents();
+
 });
