@@ -17,6 +17,21 @@ let mapIdleCount = 0;
 
 let openInfoWindow = null; // Keep track of the currently open InfoWindow
 let markers = [];
+let userMarker = null;
+
+const mapDefaults = {}
+mapDefaults.lat = -32.4007455; // Dungog
+mapDefaults.lng = 151.7544187;
+mapDefaults.zoom = 9;
+
+const rootPath = '../wp-content/themes/cso-master-child-head-office/images/';
+const mapPin = new Map();
+mapPin.set("primary", rootPath+"pin-primary_2.svg");
+mapPin.set("secondary", rootPath+"pin-secondary_2.svg");
+mapPin.set('high', rootPath+'pin-secondary_2.svg');
+mapPin.set('k-to-12', rootPath+'pin-k-12_2.svg');
+mapPin.set("flexible-learning-centres", rootPath+"pin-flc_2.svg");
+mapPin.set("search", rootPath + "pin-user_2.svg");
 
 
 const schoolList_options = {
@@ -37,7 +52,11 @@ schoolLists.forEach(list => {
     searchLists[id] = new List(id, schoolList_options);
 });
 
-
+function decodeHTMLEntities(text) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(text, "text/html");
+  return doc.documentElement.textContent;
+}
 
 function handleUpdateResultCount( count = 0 ) {
     const resultCountEl = document.querySelector("#searchResultNumber");
@@ -286,14 +305,18 @@ function addMarkers( filteredSchools, map ) {
 // The individual marker and associated event listeners
 function handleMarker( school, map ) {
     const marker = new google.maps.Marker({
-        position: {
-            lat: school?.map_location.lat,
-            lng: school?.map_location.lng,
-        },
-        map: map,
-        title: school.display_name,
-        postId : school.postId,
-        school_type : school.type
+      position: {
+        lat: school?.map_location.lat,
+        lng: school?.map_location.lng,
+      },
+      map: map,
+      title: decodeHTMLEntities(school.display_name),
+      postId: school.postId,
+      school_type: school.type,
+      icon: {
+        url: mapPin.get(school.type), // Custom blue marker
+        scaledSize: new google.maps.Size(33, 47),
+      },
     });
 
     const infoWindow = new google.maps.InfoWindow({
@@ -345,8 +368,8 @@ function initMap() {
 
   // Setup the Map Object
   map = new google.maps.Map(mapEl, {
-    center: { lat: -32.9659407, lng: 151.700276 },
-    zoom: 10,
+    center: { lat: mapDefaults.lat, lng: mapDefaults.lng },
+    zoom: mapDefaults.zoom,
     clickableIcons: false,
   });
 
@@ -371,18 +394,25 @@ function initMap() {
 
 function centerMapOnSearchLocation() {
     // Center the map on the search location
+    if(userMarker) {
+        userMarker.setMap(null);
+    }
+
     map.setCenter(searchLocationGeo);
     map.setZoom(13);
 
     // Add a custom marker at the search location
     const searchMarker = new google.maps.Marker({
-        position: searchLocationGeo,
-        map: map,
-        title: "Search Location",
-        icon: {
-            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Custom blue marker
-        },
+      position: searchLocationGeo,
+      map: map,
+      title: "Search Location",
+      icon: {
+        url: mapPin.get("search"), // Custom blue marker
+        scaledSize: new google.maps.Size(40, 57)
+      },
     });
+
+    userMarker = searchMarker;
 
     // Optional: Show an InfoWindow for the search location
     const infoWindow = new google.maps.InfoWindow({
