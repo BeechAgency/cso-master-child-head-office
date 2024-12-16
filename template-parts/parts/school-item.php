@@ -17,15 +17,31 @@
     $types = get_the_terms($id, 'school_type');
     $school_type = $types[0]->name;
 
+    switch ($school_type) {
+        case "Primary Schools":
+            $school_type_display = 'Primary';
+            break;
+        case "Secondary Schools":
+        case "High Schools":
+            $school_type_display = 'Secondary';
+            break;
+        case "Flexible Learning Centres":
+            $school_type_display = 'Flexible';
+            break;
+        default:
+            $school_type_display = $school_type;
+            break;
+    }
+
     $image_id = get_post_thumbnail_id($id);
 
 ?>
-<<?=$wrapper ?> class="school-card <?= $class ?>" <?= !empty($grid) ? 'data-xy-col="'.$grid.'"' : ''; ?> >
+<<?=$wrapper ?> class="school-card <?= $class ?>" <?= !empty($grid) ? 'data-xy-col="'.$grid.'"' : ''; ?> data-school-id="<?= $id; ?>" data-school-geo="NSW">
     <a href="<?= get_the_permalink($id); ?>" class='schoollink'><?php if( has_post_thumbnail($id) || $type === 'page' ) { echo wp_get_attachment_image($image_id,'large', false, array('class'=>'schoolimage schoolimageset')); } ?></a>
     <div class="card-content">
         <h6 class="card-date has-primary-light-color">
             <?php 
-                echo "<span>$placeIcon <span class='location'>$location</span></span><span>$typeIcon <span class='type'>$school_type</span></span>";
+                echo "<span>$placeIcon <span class='location'>$location</span></span><span>$typeIcon <span class='type'>$school_type_display</span></span>";
             ?>
         </h6>
         <h4 class="card-title"><a href="<?= get_the_permalink($id); ?>" class='school_name'><?= get_field('school_location_name', $id); ?>, <?= get_the_title($id); ?></a></h4>
