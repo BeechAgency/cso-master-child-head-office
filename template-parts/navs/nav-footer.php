@@ -81,7 +81,7 @@
         -->
         <div class="xy-col" data-xy-col="12">
             <div class="xy-flex">
-                <nav class="xy-col" data-xy-col="xl-9 lg-9 md-9 sm-12">
+                <nav class="xy-col footer-menus" data-xy-col="xl-9 lg-9 md-9 sm-12">
                     <?php csomaster_nav_location('footer'); ?>
                     <?php csomaster_nav_location('footer-auxiliary'); ?>
                 </nav>
