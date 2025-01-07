@@ -26,6 +26,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     policyPageSearch.addEventListener('input', handlePolicySearch);
+
+    const policyPageSearchSubmit = document.getElementById("policyPageSearchSubmit");
+    policyPageSearchSubmit.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        const row1Element = document.getElementById("row1");
+        if (row1Element) {
+            row1Element.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
 });
 
 function updateSearchResultCount( resultsCount ) {

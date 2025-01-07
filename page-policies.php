@@ -111,7 +111,7 @@ get_header();
                             echo "  <a href='$file_url' target='_blank'>
                                 <span class='icon'>$icon</span>
                                 <span class='title'>$title </span>
-                                <span class='year'>($year)</span>
+                                <span class='year'>$year</span>
                                 </a>";
                             echo "</li>";
                             

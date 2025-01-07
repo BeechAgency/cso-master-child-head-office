@@ -615,6 +615,7 @@ ul.policy-list a:hover {
 }
 ul.policy-list .icon {
 	width: 2.5rem;
+	min-width: 2.5rem;
 	height: auto;
 	aspect-ratio: 1 / 1;
 	background-color: var(--primary-dark);
@@ -788,6 +789,43 @@ ul.policy-list .year { margin-left: auto; }
 
 	#map {
 		min-height: 70vh;
+	}
+
+	/** Policies **/
+
+	ul.policy-list a {
+		border-color: color-mix(in srgb, currentColor, transparent 80%);
+		flex-wrap: wrap;
+		gap: 0.25rem;
+		padding: 0.75rem;
+	}
+	ul.policy-list .title {
+		font-weight: 600;
+		padding-bottom: 0.5rem;
+		margin-bottom: 0.5rem;
+		font-size: var(--fs-h6);
+
+		order: 1;
+		width: 100%;
+		border-bottom: solid 1px color-mix(in srgb, currentColor, transparent 80%);
+	}
+	ul.policy-list .icon {
+		order: 5;
+		min-width: 1.5rem;
+		width: 1.5rem;
+	}
+	ul.policy-list .icon svg {
+		width: 1rem;
+	}
+	ul.policy-list .year {
+		order: 3;
+		margin-left: 0;
+		margin-right: auto;
+		font-weight: 400;
+		font-size: var(--fs-base);
+	}
+	section.policy-list {
+		padding-block: 2rem 4rem;
 	}
 }
 
