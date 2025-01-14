@@ -83,19 +83,29 @@ get_header();
                     <ul class="policy-list policy-search-list list" id="policyList">
                     <?php
                         $policy_index = 0;
-                        foreach($policies as $policy): 
+                        foreach($policies as $policy_group): 
+
+                            $policy = $policy_group['policy'];
+                            $type = $policy_group['type'];
 
                             $file = $policy['file'];
 
-                            if(empty($file)) continue;
+                            //if(empty($file)) continue;
 
-                            $title = !empty($policy['title']) ? $policy['title'] : $file['title'];
-                            $file_url = $file['url'];
-                            $file_name = $file['filename'];
-                            $description = $file['description'];
-                            $caption = $file['caption'];
+                            $caption = $type === 'file' ? $file['caption'] : $policy['caption'];
+                            $policy_url = $type === 'file' ?  $file['url'] : $policy['link'];
+                            $description = $type === 'file'? $file['description'] : $policy['description'];
+                            $file_name =  $type === 'file' ? $file['filename'] : '';
+                            $title = $policy_group['title'];
+                            $year = $policy_group['year'];
 
-                            $year = !empty($policy['year']) ? $policy['year'] : substr($file['date'], 0, 4);
+                            if($type === 'file') {
+                                $title = !empty($policy_group['title']) ? $policy_group['title'] : $file['title'];
+                                $year = !empty($policy_group['year']) ? $policy_group['year'] : substr($file['date'], 0, 4);
+                            }
+
+
+                           
 
                             $icon = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 4.5C4.5 2.84315 5.84315 1.5 7.5 1.5H12.8787C13.4754 1.5 14.0477 1.73705 14.4697 2.15901L18.841 6.53033C19.2629 6.95229 19.5 7.52458 19.5 8.12132V19.5C19.5 21.1569 18.1569 22.5 16.5 22.5H7.5C5.84315 22.5 4.5 21.1569 4.5 19.5V4.5ZM7.5 3C6.67157 3 6 3.67157 6 4.5V19.5C6 20.3284 6.67157 21 7.5 21H16.5C17.3284 21 18 20.3284 18 19.5V9H14.25C13.0074 9 12 7.99264 12 6.75V3H7.5ZM14.25 7.5H17.6893L13.5 3.31066V6.75C13.5 7.16421 13.8358 7.5 14.25 7.5ZM8.25 12C7.83579 12 7.5 12.3358 7.5 12.75C7.5 13.1642 7.83579 13.5 8.25 13.5H15.75C16.1642 13.5 16.5 13.1642 16.5 12.75C16.5 12.3358 16.1642 12 15.75 12H8.25ZM7.5 15.75C7.5 15.3358 7.83579 15 8.25 15H15.75C16.1642 15 16.5 15.3358 16.5 15.75C16.5 16.1642 16.1642 16.5 15.75 16.5H8.25C7.83579 16.5 7.5 16.1642 7.5 15.75ZM8.25 18C7.83579 18 7.5 18.3358 7.5 18.75C7.5 19.1642 7.83579 19.5 8.25 19.5H15.75C16.1642 19.5 16.5 19.1642 16.5 18.75C16.5 18.3358 16.1642 18 15.75 18H8.25Z" fill="currentColor"/></svg>';
 
@@ -108,7 +118,7 @@ get_header();
                                 data-title='$title'
                                 data-year='$year'
                             >";
-                            echo "  <a href='$file_url' target='_blank'>
+                            echo "  <a href='$policy_url' target='_blank'>
                                 <span class='icon'>$icon</span>
                                 <span class='title'>$title </span>
                                 <span class='year'>$year</span>
