@@ -89,7 +89,7 @@
 
                 $types = get_the_terms($id, 'school_type');
                 $school_type = $types[0]->name;
-                echo "{ 'school_name' : '$name', 'type' : '$school_type', 'location' : '$location', 'schoolimage': '$src', 'schoolimageset' : '$srcSet','schoollink' : '$link', 'schoolbtn': '$link' },";
+                echo "{ 'school_name' : '$name', 'type' : '$school_type', 'location' : '$location', 'schoolimage': '$src', 'dataschoolimageset' : '$srcSet', 'schoolimageset' : '$srcSet','schoollink' : '$link', 'schoolbtn': '$link' },";
             }
             ?>
     ];
@@ -104,8 +104,9 @@
 
     const schoolListOptions = {
         valueNames: ['school_name', 'location', 'type', 
-            /*{ name: 'schoolimage', attr: 'data-src' }, */
-            { name: 'schoolimageset', attr: 'data-srcset' },
+            { name: 'schoolimage', attr: 'src' }, 
+            { name: 'dataschoolimageset', attr: 'data-srcset' },
+            { name: 'schoolimageset', attr: 'srcset' },
             { name : 'schoollink', attr: 'href'}, 
             { name: 'schoolbtn', attr: 'href' }
         ],
@@ -125,7 +126,9 @@
     searchInput.addEventListener('input', event => {
         const query = event.target.value
 
-        searchList.search(query)
+        //console.log(searchList, schoolValues);
+
+        searchList.search(query);
         return
     })
 
@@ -136,8 +139,6 @@
             document.querySelector('.school-section-nav').scrollIntoView();
         }
     });
-
-
     
-    console.log('Hi');
+    //console.log('Hi 2');
 </script>

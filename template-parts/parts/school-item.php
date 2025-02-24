@@ -37,7 +37,7 @@
 
 ?>
 <<?=$wrapper ?> class="school-card <?= $class ?>" <?= !empty($grid) ? 'data-xy-col="'.$grid.'"' : ''; ?> data-school-id="<?= $id; ?>" data-school-geo="NSW">
-    <a href="<?= get_the_permalink($id); ?>" class='schoollink'><?php if( has_post_thumbnail($id) || $type === 'page' ) { echo wp_get_attachment_image($image_id,'large', false, array('class'=>'schoolimage schoolimageset')); } ?></a>
+    <a href="<?= get_the_permalink($id); ?>" class='schoollink'><?php if( has_post_thumbnail($id) || $type === 'page' ) { echo wp_get_attachment_image($image_id,'large', false, array('class'=>'schoolimage schoolimageset dataschoolimageset')); } ?></a>
     <div class="card-content">
         <h6 class="card-date has-primary-light-color">
             <?php 
