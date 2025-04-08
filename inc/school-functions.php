@@ -185,6 +185,8 @@ function cso_hq_get_school_list() {
             );
 
         endwhile;
+
+        wp_reset_postdata();
     endif;
 
     return $output;
