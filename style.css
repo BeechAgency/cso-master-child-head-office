@@ -323,7 +323,12 @@ header .school-details span {
 .school-section-nav nav > .nav-button-group {
 	margin-left: auto;
 }
-.school-section-nav nav .apply-search { display: none; }
+
+.school-section-nav nav > .nav-button-group #clearSearchButton {
+	color: var(--primary-dark);
+}
+
+.school-section-nav nav .apply-search { display: none; background-color: var(--primary-dark); color: var(--white); }
 
 .block.cards-block__image-cards.school-type-list, .block.schools-block__school_list {
 	padding-block: 4rem;
@@ -567,6 +572,11 @@ footer .has-secondary-dark-background-color .social a img {
 	max-width: 1.5rem;
 }
 .school-section-nav .mobile-filter-header { display: none; }
+
+.schools-block__school_map .school-section-nav .mobile-filter-toggle {
+	color: var(--text-color);
+	border-color: var(--text-color);
+}
 
 footer div nav.footer-menus {
 	padding-top: 2rem;
@@ -863,10 +873,12 @@ ul.policy-list .year { margin-left: auto; }
 
 .block.schools-block__school_map {
 	padding-block: 7rem;
+	--_map-height: 38rem;
 }
 #mapCompact {
-	aspect-ratio: 4 / 3;
+	width: 100%;
 	max-width: 100%;
+	min-height: var(--_map-height);
 }
 .school-simple-list {
 	list-style: none;
@@ -875,10 +887,24 @@ ul.policy-list .year { margin-left: auto; }
 	display: flex;
 	flex-direction: column;
 	gap: 1.5rem;
-	max-height: calc(100vh - 30rem);
+	max-height: calc( var(--_map-height) - 2rem - (var(--fs-h3) * 1.1) * 2 );
 	overflow-y: scroll;
 	border-top: solid 1px currentColor;
 }
+#schoolListContainer {
+	position: relative;
+}
+#schoolListContainer::after {
+	content: '';
+	position: absolute;
+	z-index: 1;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 2rem;
+	background: linear-gradient(180deg, transparent 0%, var(--base-background-color) 100%);
+}
+
 .school-simple-list .school-item {
 	color: currentColor;
 	border-bottom: solid 1px currentColor;
@@ -918,11 +944,18 @@ ul.policy-list .year { margin-left: auto; }
 .block.schools-block__school_map .map-pills .btn {
 	cursor: pointer;
 	padding: 0.25rem 1rem;
+	background-color: white;
 	--text-color: var(--primary-dark);
 }
 .block.schools-block__school_map .map-pills .btn.active {
 	--text-color: white;
 	background-color: var(--primary-dark);
+}
+.block.schools-block__school_map .map-pills .btn:hover {
+	--text-color: white;
+	color: white;
+	border-color: var(--secondary-dark);
+	background-color: var(--secondary-dark);
 }
 
 
@@ -969,7 +1002,7 @@ ul.policy-list .year { margin-left: auto; }
 	.block.schools-block__school_map .map-pills { display: none; }
 	.mobile-hide { display: none; }
 
-	.block.schools-block__school_map .school-simple-list { margin-top: 0;}
+	.block.schools-block__school_map .school-simple-list {margin-top: 0;max-height: var(--_map-height);}
 	.block.schools-block__school_map .school-mobile-filters {
 		border: none;
 	}
