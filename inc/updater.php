@@ -1,6 +1,10 @@
 <?php 
 
-class CSO_Child_Theme_Updater {
+/**
+ * Theme Updater for Catholic Schools Child Themes
+ */
+
+class CatholicSchoolsMN_Child_Theme_Updater {
     private $file;    
     private $theme;    
     private $themeObject;
@@ -10,238 +14,247 @@ class CSO_Child_Theme_Updater {
     private $repository;    
     private $authorize_token;
     private $github_response;
-    public $log = array();
-  
+    private $package_url;
+    private $logging = false;
+
+    private $theme_dir;
+
+    /**
+     * Constructor
+     */
     public function __construct( $file ) {
         $this->file = $file;
         $this->set_theme_properties();
-  
-        //add_action( 'admin_init', array( $this, 'set_theme_properties' ) );
-  
         return $this;
     }
-  
-    public function set_theme_properties() {
-        $this->version  = wp_get_theme($this->theme)->get('Version');
-        $this->themeObject = wp_get_theme($this->theme);
 
-        $this->log[] = array('version' =>  wp_get_theme($this->theme)->get('Version'));
+    /**
+     * Provides logging to error_log if enabled
+     */
+    private function log($message) {
+        if ( !$this->logging ) return;
+        $timestamp = date("Y-m-d H:i:s");
+        error_log("ChildThemeUpdater [$timestamp]: $message");
     }
-  
+
+    /**
+     * Enable or disable logging
+     */
+    public function set_logging( $status = false ) {
+        $this->logging =  $status;
+    }
+
+    /**
+     * Set basic theme properties
+     */
+    public function set_theme_properties() {
+        if ( empty( $this->theme ) ) return;
+        $this->themeObject = wp_get_theme($this->theme);
+        $this->version  = $this->themeObject->get('Version');
+        $this->active	= $this->theme === get_stylesheet() ? true : false;
+        $this->theme_dir = get_theme_root();
+    }
+
+    /**
+     * Set the theme slug
+     */
     public function set_theme( $theme ) {
         $this->theme = $theme;
-        $this->active	= $this->theme === get_stylesheet() ? true : false;
-
-        $this->log[] = array('active' =>  $this->active, 'stylesheet' => get_stylesheet(),'theme'=> $theme );
+        $this->set_theme_properties();
     }
+
+    /**
+     * Set the GitHub username
+     */
     public function set_username( $username ) {
         $this->username = $username;
     }
+
+    /**
+     * Set the GitHub repository name
+     */
     public function set_repository( $repository ) {
         $this->repository = $repository;
     }
+
+    /**
+     * Set the GitHub authorization token
+     */
     public function authorize( $token ) {
         $this->authorize_token = $token;
     }
-  
+
+    /**
+     * Fetch latest release information from GitHub API
+     */
     private function get_repository_info() {
-        if ( is_null( $this->github_response ) ) { // Do we have a response?
-          $args = array();
-          $request_uri = sprintf( 'https://api.github.com/repos/%s/%s/releases/latest', $this->username, $this->repository ); // Build URI
-            
-          $args = array();
+        if ( !is_null( $this->github_response ) ) return;
+    
+        $request_uri = sprintf( 'https://api.github.com/repos/%s/%s/releases/latest', $this->username, $this->repository );
+    
+        $headers = array(
+            'User-Agent: ' . $this->username,
+        );
+    
+        if ($this->authorize_token) {
+            $headers[] = 'Authorization: token ' . $this->authorize_token;
+        }
+    
+        $this->log("Fetching repository info from: $request_uri");
 
-          $this->log[] = array('request_url' => $request_uri);
-  
-          if( $this->authorize_token ) { // Is there an access token?
-              $args['headers']['Authorization'] = "token {$this->authorize_token}"; // Set the headers
-          }
-  
-          //$response = json_decode( wp_remote_retrieve_body( wp_remote_get( $request_uri, $args ) ), true ); // Get JSON and parse it
-          $response = json_decode(
-            file_get_contents(
-              'https://api.github.com/repos/'.$this->username.'/'.$this->repository.'/releases/latest', false,
-                stream_context_create([
-                'http' => ['header' => "User-Agent: ".$this->username."\r\n"],
-                'ssl' => ["verify_peer"=>false, "verify_peer_name"=>false]
-            ])
-          ));
-
-          $this->log[] = array('response' => $response);
-  
-          if( is_array( $response ) ) { // If it is an array
-              $response = current( $response ); // Get the first item
-          }
-  
-          $this->github_response = $response; // Set it to our property
+        $ch = curl_init($request_uri);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        
+        $response = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+    
+        if ($http_code == 200) {
+            $this->github_response = json_decode($response);
+            if ( isset($this->github_response->tag_name) ) {
+                $this->log("Successfully caught release data: " . $this->github_response->tag_name);
+            }
+        } else {
+            $this->log("GitHub API request failed with code: $http_code");
         }
     }
-  
-    public function initialize() {
-        $this->log[] = array('init' =>  true );
 
+    /**
+     * Initialize WordPress hooks
+     */
+    public function initialize() {
         add_filter( 'pre_set_site_transient_update_themes', array( $this, 'modify_transient' ), 10, 1 );
-        //add_filter( 'plugins_api', array( $this, 'plugin_popup' ), 10, 3);
         add_filter( 'upgrader_post_install', array( $this, 'after_install' ), 10, 3 );
-        
-        // Attempt rename of files when downloading
-        //add_filter( 'upgrader_source_selection', array( $this, 'rename_package_upon_download' ), 10, 3 );
 
         // Add Authorization Token to download_package
         add_filter( 'upgrader_pre_download',
             function() {
                 add_filter( 'http_request_args', [ $this, 'download_package' ], 15, 2 );
-                return false; // upgrader_pre_download filter default return value.
+                return false;
             }
         );
     }
-  
+
+    /**
+     * Modify the update transient to include our theme if a new version exists
+     */
     public function modify_transient( $transient ) {
+        if( !property_exists( $transient, 'checked') || !$transient->checked ) {
+            return $transient;
+        }
 
-        $this->log[] = array('transient_unmodified' =>  $transient );
-  
-        if( property_exists( $transient, 'checked') ) { // Check if transient has a checked property
-  
-            if( $checked = $transient->checked ) { // Did Wordpress check for updates?
-                $this->get_repository_info(); // Get the repo info
+        $checked = $transient->checked;
+        $this->get_repository_info();
+        
+        if( empty($this->github_response) || !isset($this->github_response->tag_name) ) { 
+            return $transient; 
+        }
 
+        $github_version = filter_var($this->github_response->tag_name, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
-                $this->log[] = array('transient_checked' =>  $checked );
+        $out_of_date = version_compare( 
+            $github_version, 
+            $checked[ $this->theme ], 
+            'gt' 
+        );
 
-  
-                if( gettype($this->github_response) === "boolean" ) { return $transient; }
-  
-                $github_version = filter_var($this->github_response->tag_name, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                
-                $out_of_date = version_compare( 
-                    $github_version, 
-                    $checked[ $this->theme ], 
-                    'gt' 
-                ); // Check if we're out of date
+        if( !$out_of_date )  {
+            return $transient; 
+        }
 
+        $this->log("New version available: $github_version");
 
-                $this->log[] = array('modify_transient' =>  true, 'github_version' => $github_version,  'out_of_date' => $out_of_date );
-  
-                if( $out_of_date ) {
-  
-                    $new_files = $this->github_response->zipball_url; // Get the ZIP
-                      
-                    $slug = current( explode('/', $this->theme ) ); // Create valid slug
-  
-                    $theme = array( // setup our theme info
-                        'url' => 'https://beech.agency', //$this->themeObject["ThemeURI"],
-                        'slug' => $slug,
-                        'package' => $new_files,
-                        'new_version' => $this->github_response->tag_name
-                    );
-  
-                    $transient->response[$this->theme] = $theme; // Return it in response
-                    
-                    $this->log[] = array('out_of_date' => true, 'theme'=> $theme);
-                }
+        $new_files = $this->github_response->zipball_url; // Fallback to zipball
+        
+        // If there are theme assets attached (standard workflow ZIP), use the first one
+        if( isset($this->github_response->assets) && is_countable($this->github_response->assets) && count($this->github_response->assets) > 0 ) {
+            $asset = $this->github_response->assets[0];
+            $this->log("Using release asset for package: " . $asset->name);
+            
+            if (isset($asset->id) && $this->authorize_token) {
+                // Use API for private repo asset download
+                $new_files = "https://api.github.com/repos/{$this->username}/{$this->repository}/releases/assets/{$asset->id}";
+            } else {
+                $new_files = $asset->browser_download_url;
             }
         }
-  
-        return $transient; // Return filtered transient
+
+        $theme = array(
+            'url' => 'https://github.com/'.$this->username.'/'.$this->repository,
+            'slug' => $this->theme,
+            'package' => $new_files,
+            'new_version' => $github_version
+        );
+
+        $transient->response[$this->theme] = $theme;
+
+        return $transient;
     }
 
-    /*
-	public function rename_package_upon_download_filter( $source, $remote_source=NULL, $upgrader=NULL ) {
-        $slug = $this->theme;
-        $repo = null;
-        
-        $upgrader_object = null;
-        $remote_source = $wp_filesystem->wp_content_dir() . 'upgrade/';
-        $new_source =  trailingslashit( $remote_source ) . $slug;
-		*/
-        /*
-        if(  strpos( $source, $this->theme ) === false )
-            return $source;
-
-        
-        $path_parts = pathinfo($source);
-       
-
-        $corrected_source = $path_parts['dirname'].'/'. self::$repo_slug .'/';
-        *//*
-        rename( $source, $corrected_source );
-
-		return trailingslashit( $new_source );
-	}*/
-
-	public function rename_package_upon_download( $source, $remote_source=NULL, $upgrader=NULL ) {		
-		if( isset($_GET['action'] ) && stristr( $_GET['action'], 'theme' ) ) {
-			//$upgrader->skin->feedback( "Trying to customize theme folder name..." );
-			if( isset( $source, $remote_source ) && stristr( $source, $theme ) ){
-                
-				$corrected_source = $this->theme;
-
-				if( @rename( $source, $corrected_source ) ) {
-					//$upgrader->skin->feedback( "Theme folder name corrected to: " . $theme );
-					return $corrected_source;
-				} else {
-					//$upgrader->skin->feedback( "Unable to rename downloaded theme." );
-					return new WP_Error();
-				}
-			}
-		}
-	    return $source;
-	}
-  
+    /**
+     * Add headers to the download request
+     */
     public function download_package( $args, $url ) {
-      //dump_it('Download Package', 'red');
-      //dump_it($args, 'red');
-  
-        if ( null !== $args['filename'] ) {
-            if( $this->authorize_token ) { 
-                $args = array_merge( $args, array( "headers" => array( "Authorization" => "token {$this->authorize_token}" ) ) );
+        if (strpos($url, $this->username . '/' . $this->repository) === false) {
+            return $args;
+        }
+    
+        if ($this->authorize_token) {
+            if (!isset($args['headers'])) {
+                $args['headers'] = [];
+            }
+            $args['headers']['Authorization'] = "token {$this->authorize_token}";
+            
+            // For GitHub API asset downloads, we need specific headers
+            if (strpos($url, '/releases/assets/') !== false) {
+                $args['headers']['Accept'] = "application/octet-stream";
             }
         }
         
-        remove_filter( 'http_request_args', [ $this, 'download_package' ] );
-  
+        $args['timeout'] = 300;
+        $args['redirection'] = 5;
+        
+        remove_filter('http_request_args', [$this, 'download_package']);
+    
         return $args;
     }
-  
+
+    /**
+     * Ensure the theme lives in its own directory, not a tag-named one
+     */
     public function after_install( $response, $hook_extra, $result ) {
-  
-        global $wp_filesystem; // Get global FS object
+        global $wp_filesystem;
 
+        $install_directory = get_theme_root(). '/' . $this->theme ;
+        $this->log("Moving deployment from " . $result['destination'] . " to $install_directory");
+        
+        $wp_filesystem->move( $result['destination'], $install_directory );
+        $result['destination'] = $install_directory;
 
-        $this->log[] = array('after_install' => true );
-  
-        $install_directory = get_theme_root(). '/' . $this->theme ; // Our theme directory
-        $wp_filesystem->move( $result['destination'], $install_directory ); // Move files to the theme dir
-        $result['destination'] = $install_directory; // Set the destination for the rest of the stack
-
-        $this->log[] = array('post_after_install' => true, 'install_directory' => $install_directory,'result_destination' => $result['destination']);
-
-        // Activate the theme again once the files have been moved etc.
         if($this->active) {
             switch_theme( $this->theme );
         }
-  
+
         return $result;
     }
 }
-  
-$updater = new CSO_Child_Theme_Updater( __FILE__ );
 
-//$updater->authorize('');
+
+  
+$updater = new CatholicSchoolsMN_Child_Theme_Updater( __FILE__ );
+$update_key = get_option('csomaster_updates_key', null );
+
 $updater->set_username( 'BeechAgency' );
 $updater->set_repository( 'cso-master-child-head-office' );
 $updater->set_theme('cso-master-child-head-office'); 
 
-$updater->initialize();
-
-
-function console_log($output, $with_script_tags = true) {
-    $js_code = 'console.log("DEBUG ON"); console.log(' . json_encode($output, JSON_HEX_TAG) . 
-');';
-    if ($with_script_tags) {
-        $js_code = '<script type="text/javascript" id="debugging">' . $js_code . '</script>';
-    }
-    echo $js_code;
+if( $update_key ) {
+    $updater->authorize($update_key);    
 }
 
-do_action('admin_footer', 'console_log');
+$updater->initialize();

@@ -21,27 +21,35 @@
 <footer>
     <div class="xy-grid has-gutter <?= $footer_background_color ?> has-black-color">
         <div class="xy-col flow-columns" data-xy-col="xl-12 lg-12 md-12 sm-12">
+
+            <?php if (!empty($k_to_12_schools)): ?>
             <h5>K–12 Schools</h5>
             <ul class="footer-school-list">
                 <?= cso_hq_list_schools($k_to_12_schools); ?>
             </ul>
+            <?php endif; ?>
 
+           <?php if (!empty($secondary_schools)): ?>
            <h5>Secondary Schools</h5>
             <ul class="footer-school-list">
                 <?= cso_hq_list_schools($secondary_schools); ?>
             </ul>
+            <?php endif; ?>
 
 
+            <?php if (!empty($primary_schools)): ?>
             <h5>Primary Schools</h5>
             <ul class="footer-school-list">
                 <?= cso_hq_list_schools($primary_schools); ?>
             </ul>
+            <?php endif; ?>
 
-
+           <!--
            <h5>Flexible Learning Centres</h5>
             <ul class="footer-school-list">
                 <?= cso_hq_list_schools($flexible_schools); ?>
             </ul>
+            -->
         </div>
         
     </div>
