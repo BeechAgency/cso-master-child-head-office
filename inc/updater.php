@@ -1,5 +1,4 @@
 <?php 
-
 /**
  * Theme Updater for Catholic Schools Child Themes
  */
@@ -116,9 +115,7 @@ class CatholicSchoolsMN_Child_Theme_Updater {
     
         if ($http_code == 200) {
             $this->github_response = json_decode($response);
-            if ( isset($this->github_response->tag_name) ) {
-                $this->log("Successfully caught release data: " . $this->github_response->tag_name);
-            }
+            $this->log("Successfully caught release data: " . $this->github_response->tag_name);
         } else {
             $this->log("GitHub API request failed with code: $http_code");
         }
@@ -177,7 +174,6 @@ class CatholicSchoolsMN_Child_Theme_Updater {
             $this->log("Using release asset for package: " . $asset->name);
             
             if (isset($asset->id) && $this->authorize_token) {
-                // Use API for private repo asset download
                 $new_files = "https://api.github.com/repos/{$this->username}/{$this->repository}/releases/assets/{$asset->id}";
             } else {
                 $new_files = $asset->browser_download_url;
@@ -243,18 +239,3 @@ class CatholicSchoolsMN_Child_Theme_Updater {
         return $result;
     }
 }
-
-
-  
-$updater = new CatholicSchoolsMN_Child_Theme_Updater( __FILE__ );
-$update_key = get_option('csomaster_updates_key', null );
-
-$updater->set_username( 'BeechAgency' );
-$updater->set_repository( 'cso-master-child-head-office' );
-$updater->set_theme('cso-master-child-head-office'); 
-
-if( $update_key ) {
-    $updater->authorize($update_key);    
-}
-
-$updater->initialize();

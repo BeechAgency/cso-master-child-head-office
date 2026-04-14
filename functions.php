@@ -75,3 +75,14 @@ require get_stylesheet_directory().'/inc/school-functions.php';
 require get_stylesheet_directory().'/inc/updater.php';
 
 
+$update_key = get_option('csomaster_updates_key', null );
+$updater = new CatholicSchoolsMN_Child_Theme_Updater( __FILE__ );
+$updater->set_username( 'BeechAgency' );
+$updater->set_repository( 'cso-master-child-head-office' );
+$updater->set_theme('cso-master-child-head-office'); 
+
+if( $update_key ) {
+    $updater->authorize($update_key);    
+}
+
+$updater->initialize();
